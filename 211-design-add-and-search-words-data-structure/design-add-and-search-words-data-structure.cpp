@@ -23,59 +23,50 @@ public:
     }
 
     void insertWord(string word) {
-        insertWord(root, word);
-    }
+        insertWord(root, word, 0);
+    }  
 
     bool searchWord(string word) {
-        return searchWord(root, word);
+        return searchWord(root, word, 0);
     }
+
 
 private:
 
-    void insertWord(TrieNode *root, string word) {
-        if(word.size() == 0) {
-            root -> isTerminal = true;
+    void insertWord(TrieNode *root, const string& word, int index) {
+        if(index == word.size()) {
+            root->isTerminal = true;
             return;
         }
 
-        int index = word[0] - 'a';
-        TrieNode* child;
-
-        if(root -> children[index] != NULL){
-            child = root -> children[index];
-        } else {
-            child = new TrieNode();
-            root -> children[index] = child;
+        int charIndex = word[index] - 'a';
+        if(root->children[charIndex] == NULL) {
+            root->children[charIndex] = new TrieNode();
         }
 
-        insertWord(child, word.substr(1));
+        insertWord(root->children[charIndex], word, index + 1);
     }
 
-    bool searchWord(TrieNode* root, string word) {
-        if(word.size() == 0) {
-            return root -> isTerminal;
+
+    bool searchWord(TrieNode* root, const string& word, int index) {
+        if(index == word.size()) {
+            return root->isTerminal;
         }
 
-        if(word[0] != '.') {
-            int index = word[0] - 'a';
-
-            if(root -> children[index] != NULL) {
-                TrieNode* child = root -> children[index];
-                return searchWord(child, word.substr(1));
-            } else {
-                return false;
-            }
+        char c = word[index];
+        if(c != '.') {
+            int charIndex = c - 'a';
+            return root->children[charIndex] && searchWord(root->children[charIndex], word, index + 1);
         } else {
             for(int i = 0; i < 26; ++i) {
-                if(root -> children[i] != NULL) {
-                    if (searchWord(root->children[i], word.substr(1))) {
-                        return true;
-                    }
+                if(root->children[i] && searchWord(root->children[i], word, index + 1)) {
+                    return true;
                 }
             }
             return false;
         }
     }
+
 };
 
 class WordDictionary {
