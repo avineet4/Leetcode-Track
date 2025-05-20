@@ -9,8 +9,7 @@ public:
         int i = 0, j = 0;
 
         while (i < g.size() && j < s.size()) {
-            if (s[j] >= g[i]) i++;
-            j++;
+            if (s[j++] >= g[i]) i++;
         }
 
         return i;
