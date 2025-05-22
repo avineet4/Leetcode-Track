@@ -1,16 +1,17 @@
 class Solution {
 public:
     int partitionString(string s) {
-        vector<bool> group(26, 0);
+        int mask = 0;
         int ans = 0;
 
         for(const char& letter: s) {
-            if(group[letter - 'a']){
+            int bit = 1 << (letter - 'a');
+            if(mask & bit){
                 ans++;
-                fill(group.begin(), group.end(), 0);
+                mask = 0;
             }
 
-            group[letter - 'a'] = 1;
+            mask |= bit;
         }
 
         return ++ans;
