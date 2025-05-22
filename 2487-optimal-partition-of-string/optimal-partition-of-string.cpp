@@ -1,8 +1,7 @@
 class Solution {
 public:
     int partitionString(string s) {
-        int mask = 0;
-        int ans = 0;
+        int mask = 0, ans = 0;
 
         for(const char& letter: s) {
             int bit = 1 << (letter - 'a');
@@ -10,7 +9,6 @@ public:
                 ans++;
                 mask = 0;
             }
-
             mask |= bit;
         }
 
