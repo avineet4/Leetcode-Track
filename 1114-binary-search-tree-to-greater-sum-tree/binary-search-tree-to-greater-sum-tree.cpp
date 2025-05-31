@@ -11,19 +11,14 @@
  * };
  */
 class Solution {
-    void helper(TreeNode* root, int& sum) {
-        if (root) {
-            helper(root -> right, sum);
-            root -> val += sum;
-            sum = root -> val;
-            helper(root -> left, sum);
-        }
-    }
-
 public:
-    TreeNode* bstToGst(TreeNode* root) {
-        int sum = 0;
-        helper(root, sum);
+    TreeNode* bstToGst(TreeNode* root, int& sum = *(new int(0))) {
+        if (root) {
+            bstToGst(root->right, sum);
+            root->val += sum;
+            sum = root->val;
+            bstToGst(root->left, sum);
+        }
         return root;
     }
 };
