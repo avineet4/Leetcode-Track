@@ -1,17 +1,16 @@
 class Solution {
 public:
     int largestCombination(vector<int>& candidates) {
-        int res = 0;
-        for(int i = 0; i < 24; ++i){
-            int count = 0;
-            for(const auto& candidate: candidates) {
-                if(candidate & (1 << i)){
-                    count++;
-                }
+        int arr[24] = {0};
+        int maxEl = 0;
+
+        for(const int& candidate: candidates){
+            for(int i = 0; i < 24; ++i) {
+                arr[i] += ((candidate & (1 << i)) ? 1 : 0);
+                maxEl = max(maxEl, arr[i]);
             }
-            res = max(res, count); 
         }
 
-        return res;
+        return maxEl;
     }
 };
