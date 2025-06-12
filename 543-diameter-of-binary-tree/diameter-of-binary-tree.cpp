@@ -11,19 +11,26 @@
  */
 class Solution {
 public:
-    int height(TreeNode* root) {
-        if(!root) return 0;
+    pair<int, int> heightDiameter(TreeNode* root) {
+        if(!root) {
+            return {0, 0};
+        }
 
-        return 1 + max(height(root -> left), height(root -> right));
+        pair<int, int> leftAns = heightDiameter(root -> left);
+        pair<int, int> rightAns = heightDiameter(root -> right);
+
+        int ld = leftAns.second;
+        int lh = leftAns.first;
+        int rd = rightAns.second;
+        int rh = rightAns.first;
+
+        int height = 1 + max(lh, rh);
+        int diameter = max(lh + rh, max(ld, rd));
+
+        return {height, diameter};
     }
 
     int diameterOfBinaryTree(TreeNode* root) {
-        if(!root) return 0;
-
-        int leftPlusRightHeight = height(root -> left) + height(root -> right);
-        int leftDiameter = diameterOfBinaryTree(root -> left);
-        int rightDiameter = diameterOfBinaryTree(root -> right);
-
-        return max(leftPlusRightHeight, max(leftDiameter, rightDiameter));
+        return heightDiameter(root).second;
     }
 };
