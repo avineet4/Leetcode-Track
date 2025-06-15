@@ -12,11 +12,24 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        if(!root) return 0;
+        if (!root) return 0;
 
-        int leftDepth = maxDepth(root -> left);
-        int rightDepth = maxDepth(root -> right);
+        int maxDepth = 0;
+        stack<pair<TreeNode*, int>> pendingNodes;
+        pendingNodes.push({root, 1});
 
-        return max(leftDepth, rightDepth) + 1;
+        while(!pendingNodes.empty()) {
+            auto [node, depth] = pendingNodes.top();
+            pendingNodes.pop();
+
+            maxDepth = max(maxDepth, depth);
+
+            if (node->left)
+                pendingNodes.push({node->left, depth + 1});
+            if (node->right)
+                pendingNodes.push({node->right, depth + 1});
+        }
+
+        return maxDepth;
     }
 };
