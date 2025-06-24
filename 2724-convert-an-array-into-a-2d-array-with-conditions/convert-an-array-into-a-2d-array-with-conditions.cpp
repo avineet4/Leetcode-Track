@@ -1,27 +1,19 @@
 class Solution {
 public:
     vector<vector<int>> findMatrix(vector<int>& nums) {
-        int mostFreq = 0;
+        int maxFreq = 0;
         unordered_map<int, int> freq;
 
         for(const int& num : nums) {
-            freq[num]++;
-            if(freq[num] > mostFreq) {
-                mostFreq = freq[num];
-            }
+            maxFreq = max(maxFreq, ++freq[num]);
         }
         
-        vector<vector<int>> result;
+        vector<vector<int>> result(maxFreq);
 
-        for(int i = 0; i < mostFreq; ++i) {
-            vector<int> row;
-            for(auto& it : freq){
-                if(it.second > 0) {
-                    row.push_back(it.first);
-                    it.second--;
-                }
+        for (auto& [num, count] : freq) {
+            for (int i = 0; i < count; ++i) {
+                result[i].push_back(num);
             }
-            result.push_back(row);
         }
 
         return result;
