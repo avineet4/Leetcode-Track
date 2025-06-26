@@ -7,8 +7,13 @@ public:
             bool bbit = (b >> i) & 1;
             bool cbit = (c >> i) & 1;
 
-            if((abit == 0 && bbit == 0 && cbit == 1) || (abit ^ bbit == 1 && cbit == 0)) count++;
-            else if(abit == 1 && bbit == 1 && cbit == 0) count += 2;
+            if ((abit | bbit) != cbit) {
+                if (abit == 1 && bbit == 1 && cbit == 0)
+                    count += 2;
+                else
+                    count++;
+            }
+
         }
         return count;
     }
