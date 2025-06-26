@@ -1,26 +1,19 @@
 class Solution {
 public:
     int compareVersion(string version1, string version2) {
-        int i = 0 , j = 0;
-        int n = version1.size(), m = version2.size();
+        stringstream ss1(version1), ss2(version2);
+        string token1, token2;
 
-        while(i < n || j < m) {
+        while (ss1.good() || ss2.good()) {
             int num1 = 0, num2 = 0;
 
-            while(i < n && version1[i] != '.') {
-                num1 = (num1 * 10) + (version1[i++] - '0');
-            }
+            if (getline(ss1, token1, '.'))
+                num1 = stoi(token1);
+            if (getline(ss2, token2, '.'))
+                num2 = stoi(token2);
 
-            if(version1[i] == '.') i++;
-
-            while(j < m && version2[j] != '.') {
-                num2 = (num2 * 10) + (version2[j++] - '0');
-            }
-
-            if(version2[j] == '.') j++;
-
-            if(num1 > num2) return 1;
-            else if(num1 < num2) return -1;
+            if (num1 > num2) return 1;
+            if (num1 < num2) return -1;
         }
 
         return 0;
