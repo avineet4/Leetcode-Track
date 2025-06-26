@@ -4,7 +4,7 @@ public:
         int i = 0 , j = 0;
         int n = version1.size(), m = version2.size();
 
-        while(i < n && j < m) {
+        while(i < n || j < m) {
             int num1 = 0, num2 = 0;
 
             while(i < n && version1[i] != '.') {
@@ -21,30 +21,6 @@ public:
 
             if(num1 > num2) return 1;
             else if(num1 < num2) return -1;
-        }
-
-        while(i < n) {
-            int num = 0;
-
-            while(i < n && version1[i] != '.') {
-                num = (num * 10) + (version1[i++] - '0');
-            }
-
-            if(version1[i] == '.') i++;
-
-            if(num > 0) return 1;
-        }
-
-        while(j < m) {
-            int num = 0;
-
-            while(j < m && version2[j] != '.') {
-                num = (num * 10) + (version2[j++] - '0');
-            }
-
-            if(version2[j] == '.') j++;
-
-            if(num > 0) return -1;
         }
 
         return 0;
