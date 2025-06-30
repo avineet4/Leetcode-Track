@@ -1,23 +1,21 @@
 class Solution {
 public:
-    static bool compare(int &a, int &b) {
-        string A = to_string(a);
-        string B = to_string(b);
-
-        return A + B > B + A;
+    static bool compare(const string &a, const string &b) {
+        return a + b > b + a;
     }
 
     string largestNumber(vector<int>& nums) {
-        sort(nums.begin(), nums.end(), compare);
+        vector<string> strNums;
+        strNums.reserve(nums.size());
 
-        if (nums[0] == 0) return "0";
-
-        string result = "";
-
-        for(const auto& num : nums) {
-            result += to_string(num);
+        for (int num : nums) {
+            strNums.push_back(to_string(num));
         }
 
-        return result;
+        sort(strNums.begin(), strNums.end(), compare);
+
+        if (strNums[0] == "0") return "0";
+
+        return accumulate(strNums.begin(), strNums.end(), string());
     }
 };
