@@ -1,6 +1,8 @@
 class Solution {
 public:
     int firstUniqChar(string s) {
+        if(s.size() == 1) return 0;
+        
         vector<int> map(26, 0);
 
         for(const auto& letter : s) {
