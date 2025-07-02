@@ -24,6 +24,7 @@ public:
 
     vector<int> findRightInterval(vector<vector<int>>& intervals) {
         vector<pair<int, int>> starts;
+        starts.reserve(intervals.size());
 
         for(int i = 0; i < intervals.size(); ++i) {
             starts.emplace_back(intervals[i][0], i);
