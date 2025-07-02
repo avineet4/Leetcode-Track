@@ -36,8 +36,21 @@ public:
         vector<int> result;
         result.reserve(n);
 
-        for(const auto& interval : intervals) {
-            result.push_back(search(starts, interval[1]));
+        for (const auto& interval : intervals) {
+            int target = interval[1];
+
+            // lower_bound to find first start >= target
+            auto it = lower_bound(
+                starts.begin(),
+                starts.end(),
+                make_pair(target, 0)
+            );
+
+            if (it == starts.end()) {
+                result.push_back(-1);
+            } else {
+                result.push_back(it->second);
+            }
         }
 
         return result;
