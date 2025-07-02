@@ -1,16 +1,21 @@
 class Solution {
 public:
     int firstUniqChar(string s) {
-        if(s.size() == 1) return 0;
-        
-        vector<int> map(26, 0);
+        bitset<26> seen_once;
+        bitset<26> seen_multiple;
 
-        for(const auto& letter : s) {
-            map[letter - 'a']++;
+        for (char c : s) {
+            int idx = c - 'a';
+            if (!seen_once[idx]) {
+                seen_once.set(idx);
+            } else {
+                seen_multiple.set(idx);
+            }
         }
 
-        for(int i = 0; i < s.size(); ++i) {
-            if(map[s[i] - 'a'] == 1) {
+        for (int i = 0; i < s.size(); ++i) {
+            int idx = s[i] - 'a';
+            if (seen_once[idx] && !seen_multiple[idx]) {
                 return i;
             }
         }
