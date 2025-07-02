@@ -23,17 +23,18 @@ public:
     }
 
     vector<int> findRightInterval(vector<vector<int>>& intervals) {
+        int n = intervals.size();
         vector<pair<int, int>> starts;
-        starts.reserve(intervals.size());
+        starts.reserve(n);
 
-        for(int i = 0; i < intervals.size(); ++i) {
+        for(int i = 0; i < n; ++i) {
             starts.emplace_back(intervals[i][0], i);
         }
 
         sort(starts.begin(), starts.end());
 
         vector<int> result;
-        result.reserve(intervals.size());
+        result.reserve(n);
 
         for(const auto& interval : intervals) {
             result.push_back(search(starts, interval[1]));
