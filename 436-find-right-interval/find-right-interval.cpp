@@ -1,8 +1,8 @@
 class Solution {
 public:
-    static bool compare(pair<int, int>& a, pair<int, int>& b) {
-        return a.first < b.first;
-    }
+    // static bool compare(pair<int, int>& a, pair<int, int>& b) {
+    //     return a.first < b.first;
+    // }
 
     int search(vector<pair<int, int>>& arr, int target) {
         int left = 0, right = arr.size() - 1;
@@ -29,7 +29,7 @@ public:
             starts.push_back(pair<int, int>(intervals[i][0], i));
         }
 
-        sort(starts.begin(), starts.end(), compare);
+        sort(starts.begin(), starts.end());
 
         vector<int> result;
         result.reserve(intervals.size());
