@@ -1,21 +1,24 @@
 class Solution {
 public:
     int firstUniqChar(string s) {
-        bitset<26> seen_once;
-        bitset<26> seen_multiple;
+        unsigned int seen_once = 0;
+        unsigned int seen_multiple = 0;
 
         for (char c : s) {
             int idx = c - 'a';
-            if (!seen_once[idx]) {
-                seen_once.set(idx);
+            unsigned int mask = (1U << idx);
+
+            if (!(seen_once & mask)) {
+                seen_once |= mask;
             } else {
-                seen_multiple.set(idx);
+                seen_multiple |= mask;
             }
         }
 
         for (int i = 0; i < s.size(); ++i) {
             int idx = s[i] - 'a';
-            if (seen_once[idx] && !seen_multiple[idx]) {
+            unsigned int mask = (1U << idx);
+            if ((seen_once & mask) && !(seen_multiple & mask)) {
                 return i;
             }
         }
