@@ -26,7 +26,7 @@ public:
         vector<pair<int, int>> starts;
 
         for(int i = 0; i < intervals.size(); ++i) {
-            starts.push_back(pair<int, int>(intervals[i][0], i));
+            starts.emplace_back(intervals[i][0], i);
         }
 
         sort(starts.begin(), starts.end());
