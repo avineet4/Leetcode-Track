@@ -1,28 +1,26 @@
+constexpr int UNSEEN = 100001;
+constexpr int DUPLICATE = 100002;
+
+array<int, 26> indices;
+auto x = [](){ indices.fill(UNSEEN); return 0; }();
+
 class Solution {
 public:
-    int firstUniqChar(string s) {
-        unsigned int seen_once = 0;
-        unsigned int seen_multiple = 0;
-
-        for (char c : s) {
-            int idx = c - 'a';
-            unsigned int mask = (1U << idx);
-
-            if (!(seen_once & mask)) {
-                seen_once |= mask;
-            } else {
-                seen_multiple |= mask;
-            }
+    int firstUniqChar(const string& s) {
+        int n = s.size();
+        for (int i = 0; i < n; i++) {
+            int c = s[i] - 'a';
+            if (indices[c] == UNSEEN)
+                indices[c] = i;
+            else
+                indices[c] = DUPLICATE;
         }
-
-        for (int i = 0; i < s.size(); ++i) {
-            int idx = s[i] - 'a';
-            unsigned int mask = (1U << idx);
-            if ((seen_once & mask) && !(seen_multiple & mask)) {
-                return i;
-            }
+        int j = UNSEEN;
+        for (int& z : indices) {
+            if (z < j)
+                j = z;
+            z = UNSEEN;  // reset for reuse
         }
-
-        return -1;
+        return j != UNSEEN ? j : -1;
     }
 };
